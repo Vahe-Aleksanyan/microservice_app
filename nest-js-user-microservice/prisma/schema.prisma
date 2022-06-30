@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
- provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -10,33 +10,16 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+
+
 model User {
   id    Int     @default(autoincrement()) @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   email String @unique
-  hash String
-
+  password String
   firstName String?
   LastName String?
 
-  bookmarks BookMark[]
-
   @@map("Users")
-}
-
-model BookMark {
-    id    Int     @default(autoincrement()) @id
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    title String
-    description String?
-    link String
-
-    userId Int
-    user User @relation(fields: [userId], references: [id] )
-
-    @@map("BookMarks")
 }

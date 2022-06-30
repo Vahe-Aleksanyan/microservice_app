@@ -24,7 +24,7 @@ export class UserController {
   // import user service threw dependency injection
   // constructor(private userService: UserService) {}
   constructor(
-    @Inject('SUBSCRIBERS_SERVICE') private userService: ClientProxy,
+    @Inject('USER_SERVICE') private userService: ClientProxy,
   ) {}
 
   @Get('me')

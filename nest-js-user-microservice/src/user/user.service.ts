@@ -6,7 +6,7 @@ import {AuthDto} from './dto/createUser.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class AuthService {
+export class UserService {
    // constructor(
         // @InjectRepository(User)
         // private userRepository: Repository<User>,

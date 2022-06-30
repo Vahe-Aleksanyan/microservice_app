@@ -3,17 +3,20 @@
 import { Controller } from '@nestjs/common';
 import { Ctx, EventPattern, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 import {AuthDto} from './dto/createUser.dto';
-import { AuthService } from './user.service';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
     constructor(
-        private readonly userService: AuthService,
+        private readonly userService: UserService,
     ) {}
 
-    @MessagePattern({cmd: 'get-mee'})
+    @MessagePattern({cmd: 'get-me'})
     getGreetingMessage(name: string): string {
         return `Hello ${name}`;
     }
 
 }
+
+// Guard functions that stands in front of endpoint and allow/dont allow execution, it checks strategy
+

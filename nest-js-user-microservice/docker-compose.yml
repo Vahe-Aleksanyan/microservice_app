@@ -11,3 +11,20 @@ services:
       - "15672:15672" # is the port of the management plugin. It provides an interface that lets us manage and monitor our RabbitMQ instance
     env_file:
       - ./rabbitmq.env
+  dev_db:
+    image: postgres:13
+    restart: "always"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dev_db

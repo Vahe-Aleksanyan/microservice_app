@@ -29,17 +29,7 @@ services:
     environment:
       - "DATABASE_URL=postgres://postgres:123@test_db:5432/nest"
 
-  dev_db:
-    image: postgres:13
-    restart: "always"
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
-    volumes:
-      - pg_data:/var/lib/postgresql
+#
 
   test_db:
     image: postgres:13
@@ -51,14 +41,14 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - dev_db
-      - test_db
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - dev_db
+#      - test_db
 
 volumes:
   pg_data:

@@ -9,7 +9,7 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
     controllers: [UserController],
     providers: [
         {
-            provide: 'SUBSCRIBERS_SERVICE',
+            provide: 'USER_SERVICE',
             useFactory: (configService: ConfigService) => {
                 const user = configService.get('RABBITMQ_USER');
                 const password = configService.get('RABBITMQ_PASSWORD');
