@@ -1,5 +1,4 @@
 import { Body, ClassSerializerInterceptor, Controller, HttpCode, Inject, Post, UseInterceptors } from "@nestjs/common";
-import { AuthService } from './auth.service';
 import { AuthDto } from './dto';
 import { ClientProxy } from "@nestjs/microservices";
 

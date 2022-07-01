@@ -14,6 +14,7 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
+
   async signup(dto: AuthDto) {
 
     // generating hashed password
@@ -75,5 +76,17 @@ export class AuthService {
     return {
       access_token: token,
     };
+  }
+
+  async getUser(id) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: id
+      },
+    });
+    delete user.password
+    console.log(user);
+    console.log("ffff");
+    return user;
   }
 }

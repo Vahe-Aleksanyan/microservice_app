@@ -18,4 +18,12 @@ export class AuthController {
   async signIn(@Body() dto: AuthDto) {
     return this.AuthService.signIn(dto);
   }
+
+  @MessagePattern({cmd: 'get_user_from_db'})
+  async getUser(id) {
+    console.log('stex em');
+    return await this.AuthService.getUser(id);
+  }
+
+
 }

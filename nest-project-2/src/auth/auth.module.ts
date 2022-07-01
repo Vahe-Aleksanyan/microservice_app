@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './strategy';
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ClientProxyFactory, Transport } from "@nestjs/microservices";
 
@@ -30,7 +29,7 @@ import { ClientProxyFactory, Transport } from "@nestjs/microservices";
         })
       },
       inject: [ConfigService],
-    }
+    },
   ],
 })
 export class AuthModule {}
