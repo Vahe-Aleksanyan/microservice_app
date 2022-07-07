@@ -12,7 +12,8 @@ import {
 
 import { Request } from "express";
 import { ClientProxy } from '@nestjs/microservices';
-import { repeatWhen } from "rxjs";
+import { GetUser } from "./decorator";
+// import { repeatWhen } from "rxjs";
 
 
 //@UseGuards(JwtGuard) // 'jwt' are given name by default
@@ -25,9 +26,7 @@ export class UserController {
   ) {}
 
   @Get('me')
-  getMe(@Req() req: Request, @Body() body: any) {
-    console.log(req.body);
-    console.log(body);
-    return this.userService.send({cmd: 'me'}, { headers: req.headers, body: req.body });
+  getMe(@Req() req: Request, @GetUser('id') userId: number) {
+    return this.userService.send({cmd: 'me'}, { headers: req.headers, body: req.body, userId });
   }
 }

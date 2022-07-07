@@ -15,7 +15,7 @@ export class UserController {
         private readonly userService: UserService,
     ) {}
 
-    // @UseGuards(AuthGuard('jwt'))
+
     @UseGuards(JwtGuard)
     @MessagePattern({cmd: 'me'})
     async getMe( req: string) {
