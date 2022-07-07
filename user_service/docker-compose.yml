@@ -1,17 +1,19 @@
 version: "3"
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    hostname: rabbitmq
-    volumes:
-      - /var/lib/rabbitmq
+  user_service:
+    image: user_service
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5672:5672" #is the main RabbitMQ port that our NestJS application will use
-      - "15672:15672" # is the port of the management plugin. It provides an interface that lets us manage and monitor our RabbitMQ instance
-    env_file:
-      - ./rabbitmq.env
-  user:
+      - "3002:3002" # Local_port:container_port
+    volumes:
+      - .:/user_service
+    command: 'npm run start:dev'
+    environment:
+      env_file:
+        -.env
+  user_db:
     image: postgres:13
     restart: "always"
     ports:
@@ -21,12 +23,12 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - user
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - user_db
 
 # volume add

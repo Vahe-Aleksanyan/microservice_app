@@ -1,16 +1,18 @@
 version: "3"
 services:
-#  rabbitmq:
-#    image: rabbitmq:3-management
-#    container_name: rabbitmq
-#    hostname: rabbitmq
-#    volumes:
-#      - /var/lib/rabbitmq
-#    ports:
-#      - "5672:5672" #is the main RabbitMQ port that our NestJS application will use
-#      - "15672:15672" # is the port of the management plugin. It provides an interface that lets us manage and monitor our RabbitMQ instance
-#    env_file:
-#      - ./rabbitmq.env
+  shop_service:
+    image: shop_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - .:/shop_service # host folder:container folder
+    command: 'npm run start:dev'
+    environment:
+      env_file:
+        -.env
   shop_db:
     image: postgres:13
     restart: "always"

@@ -1,29 +1,19 @@
 // create a message based handle
-
 import { Controller, Req, UseGuards, ExecutionContext} from "@nestjs/common";
 import { Ctx, EventPattern, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
-import {AuthDto} from './dto/createUser.dto';
 import { UserService } from './user.service';
-import { AuthGuard } from "@nestjs/passport";
-import { JwtStrategy } from "../auth/strategy";
-import { Request } from "express";
-import { JwtGuard } from "./guard";
+import { JwtGuard } from './guard';
+import { GetUser } from "./decorator";
 
 @Controller('users')
 export class UserController {
-    constructor(
-        private readonly userService: UserService,
-    ) {}
+  constructor(private readonly userService: UserService) {}
 
-
-    @UseGuards(JwtGuard)
-    @MessagePattern({cmd: 'me'})
-    async getMe( req: string) {
-        return  await this.userService.getMe(req);
-    }
-
-
+  @UseGuards(JwtGuard)
+  @MessagePattern({ cmd: 'me' })
+  async getMe(data: any,  @GetUser('id') userId: number) {
+    return await this.userService.getMe(data);
+  }
 }
 
 // Guard functions that stands in front of endpoint and allow/dont allow execution, it checks strategy
-

@@ -1,66 +1,27 @@
-version: "3.9"
-
+version: "3"
 services:
-  api_1:
-    image: nest_project_2
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - /var/lib/rabbitmq
+    ports:
+      - "5672:5672" #is the main RabbitMQ port that our NestJS application will use
+      - "15672:15672" # is the port of the management plugin. It provides an interface that lets us manage and monitor our RabbitMQ instance
+    env_file:
+      - ./rabbitmq.env
+  api_gateway:
+    image: api_gateway
     build:
-      context: . # vortex man ga dockerfile
+      context: .
       dockerfile: Dockerfile
     ports:
       - "3001:3001" # Local_port:container_port
     volumes:
-      - .:/app # host folder:container folder
-    command: 'npm run start:dev' # override dockerfile CMD
+      - .:/api_gateway
+    command: 'npm run start:dev'
     environment:
-      - "DATABASE_URL=postgres://postgres:123@dev_db:5432/nest"
-#    env_file:
-#      - .env
-
-  api_test:
-    image: nest_project_2
-    build:
-      context: . # vortex man ga dockerfile
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001" # Local_port:container_port
-    volumes:
-      - .:/app # host folder:container folder
-    command: 'npm test' # override dockerfile CMD
-    environment:
-      - "DATABASE_URL=postgres://postgres:123@test_db:5432/nest"
-
-#
-
-  test_db:
-    image: postgres:13
-    restart: "no"
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
-
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - dev_db
-#      - test_db
-
-volumes:
-  pg_data:
-
-
-
-#    environment:
-#      - 'MONGO_URL=mongodb+srv://root:example@mongo:27017'
-
-#  mongo:
-#    image: mongo
-#    restart: always
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: example
+      env_file:
+        -.env
+        - raabbitmq.env
