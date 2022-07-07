@@ -24,11 +24,10 @@ export class UserController {
     @Inject('USER_SERVICE') private userService: ClientProxy,
   ) {}
 
-
   @Get('me')
-  getMe(@Req() req: Request) {
-    const request = req.headers;
-    console.log(request);
-    return this.userService.send({cmd: 'me'}, request.authorization);
+  getMe(@Req() req: Request, @Body() body: any) {
+    console.log(req.body);
+    console.log(body);
+    return this.userService.send({cmd: 'me'}, { headers: req.headers, body: req.body });
   }
 }

@@ -17,16 +17,17 @@ export class UserService {
     ) {}
 
     async getMe(token) {
-        const tok = token.split(" ")[1]
-        const secret = this.config.get('JWT_SECRET');
-        const decode = jjwt.verify(tok, "some-super-secret")
-        const decodeValues = Object.values(decode)
-        const user = await this.prisma.user.findUnique({
-                where: {
-                    email: decodeValues[1]
-                },
-            });
+        console.log(token);
+        // const tok = token.split(" ")[1]
+        // const secret = this.config.get('JWT_SECRET');
+        // const decode = jjwt.verify(tok, "some-super-secret")
+        // const decodeValues = Object.values(decode)
+        // const user = await this.prisma.user.findUnique({
+        //         where: {
+        //             email: decodeValues[1]
+        //         },
+        //     });
 
-        return user
+        return true
     }
 }
