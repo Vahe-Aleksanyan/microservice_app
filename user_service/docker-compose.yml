@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3002:3002" # Local_port:container_port
+      - "3003:3003" # Local_port:container_port
     volumes:
       - .:/user_service
     command: 'npm run start:dev'
